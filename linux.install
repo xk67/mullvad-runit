@@ -1,0 +1,24 @@
+#!/bin/bash
+
+echo -n "sv dir: "
+read sv
+
+echo -n "service dir: "
+read service
+
+sv="$sv/mullvad"
+service="$service/mullvad"
+
+# Delete old system link, may cause errors
+if [[ -L $service ]]; then
+   rm $service ;
+fi
+
+# Create a backup folder
+if [[ -d $sv ]]; then
+   mv $sv $sv.bck
+fi
+
+mkdir $sv
+cp ./run $sv
+ln -s $sv $service

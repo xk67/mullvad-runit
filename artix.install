@@ -1,0 +1,18 @@
+#!/bin/bash
+
+sv="/etc/runit/sv/mullvad"
+service="/run/runit/service/mullvad"
+
+# Delete old system link, may cause errors
+if [[ -L $service ]]; then
+   rm $service ;
+fi
+
+# Create a backup folder
+if [[ -d $sv ]]; then
+   mv $sv $sv.bck
+fi
+
+mkdir $sv
+cp ./run $sv
+ln -s $sv $service
